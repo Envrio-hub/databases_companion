@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='db_companion',
+    name='database_companion',
     version='0.1.0',
     description='Auxiliary modules for database libraries',
     author='Ioannis Tsakmakis, Nikolaos Kokkos',
