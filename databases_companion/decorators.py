@@ -75,12 +75,9 @@ class DTypeValidator:
 
                 # Check both positional (args) and keyword (kwargs) arguments
                 for param_name in param_names:
-                    # Check if the param is in keyword arguments
-                    if param_name in bound_args:
-                        if not isinstance(bound_args[param_name], int):
-                            alchemy.error(f"{param_name} must be an integer")
-                            return {"message": "Bad Request", "errors": [f"{param_name} must be an integer"]}
-                    
+                    if not isinstance(bound_args[param_name], int):
+                        alchemy.error(f"{param_name} must be an integer")
+                        return {"message": "Bad Request", "errors": [f"{param_name} must be an integer"]}
                     
                 # Call the original function if validation passes
                 return func(*args, **kwargs)
@@ -97,15 +94,10 @@ class DTypeValidator:
                 bound_args = sig.bind_partial(*args, **kwargs).arguments    
 
                 # Check if the parameter is present and validate its type
-                for index, param_name in enumerate(param_names):
-                    if bound_args.get('kwargs'):
-                        if param_name in bound_args['kwargs'] and not isinstance(bound_args['kwargs'][param_name], str):
-                            alchemy.error(f"{param_name} must be a string")
-                            return {"message": "Bad Request", "errors": [f"{param_name} must be a string"]}
-                    elif bound_args.get('args'):
-                        if not isinstance(bound_args['args'][index], str):
-                            alchemy.error(f"{param_name} must be a string")
-                            return {"message": "Bad Request", "errors": [f"{param_name} must be a string"]}
+                for param_name in enumerate(param_names):
+                    if param_name is not isinstance(bound_args[param_name], str):
+                        alchemy.error(f"{param_name} must be a string")
+                        return {"message": "Bad Request", "errors": [f"{param_name} must be a string"]}
                     
                 # Call the original function if validation passes
                 return func(*args, **kwargs)
@@ -122,13 +114,9 @@ class DTypeValidator:
                 bound_args = sig.bind_partial(*args, **kwargs).arguments    
 
                 # Check if the parameter is present and validate its type
-                for index, param_name in enumerate(param_names):
-                    if bound_args.get('kwargs'):
-                        if param_name in bound_args['kwargs'] and not isinstance(bound_args['kwargs'][param_name], float):
-                            return {"message": "Bad Request", "errors": [f"{param_name} must be float"]}
-                    elif bound_args.get('args'):
-                        if not isinstance(bound_args['args'][index], float):
-                            return {"message": "Bad Request", "errors": [f"{param_name} must be float"]}
+                for param_name in enumerate(param_names):
+                    if param_name is not isinstance(bound_args[param_name], float):
+                        return {"message": "Bad Request", "errors": [f"{param_name} must be float"]}
                     
                 # Call the original function if validation passes
                 return func(*args, **kwargs)
@@ -137,28 +125,32 @@ class DTypeValidator:
 
     @staticmethod
     def validate_decimal(*param_names):
-        """Decorator to validate that a specific parameter is a DECIMAL(10,6)."""
+        """
+        Decorator to validate that specified parameters are valid decimals.
+        If a parameter is not a Decimal instance, the decorator attempts to
+        convert it to one. If conversion fails, an error is returned.
+        """
         def decorator(func):
+            @wraps(func)
             def wrapper(*args, **kwargs):
-                # Get the function's signature
+                # Bind the function arguments to their names
                 sig = inspect.signature(func)
-                bound_args = sig.bind_partial(*args, **kwargs).arguments    
+                bound_args = sig.bind(*args, **kwargs)
+                bound_args.apply_defaults()
 
-                # Ensure kwargs exists and is a dictionary
-                if "kwargs" in bound_args and isinstance(bound_args["kwargs"], dict):
-                    for param_name in param_names:
-                        if param_name in bound_args["kwargs"]:
-                            value = bound_args["kwargs"][param_name]
-
+                for param_name in param_names:
+                    if param_name in bound_args.arguments:
+                        value = bound_args.arguments[param_name]
+                        # If the value is not already a Decimal, try to convert it.
+                        if not isinstance(value, Decimal):
                             try:
-                                # Convert to Decimal and enforce 6 decimal places
-                                bound_args["kwargs"][param_name] = Decimal(value).quantize(Decimal('0.000001'))
+                                bound_args.arguments[param_name] = Decimal(value)
                             except (ValueError, InvalidOperation):
-                                # Return an error if conversion fails
-                                return {"message": "Bad Request", "errors": [f"{param_name} must be a decimal with up to 6 decimal places"]}
-
-                # Call the original function with modified arguments
-                return func(*args, **bound_args["kwargs"])
-
+                                return {
+                                    "message": "Bad Request",
+                                    "errors": [f"'{param_name}' must be a valid decimal."]
+                                }
+                # Call the original function with updated arguments.
+                return func(*bound_args.args, **bound_args.kwargs)
             return wrapper
         return decorator
