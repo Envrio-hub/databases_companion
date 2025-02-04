@@ -65,17 +65,31 @@ class DatabaseDecorators():
 class DTypeValidator:
 
     @staticmethod
+    def _extract_bound_args(func, *args, **kwargs):
+        """
+        Helper method to bind function arguments to their parameter names.
+        Optionally flattens nested dictionaries if keys 'kwargs' or 'args' exist.
+        """
+        sig = inspect.signature(func)
+        bound_args = sig.bind_partial(*args, **kwargs).arguments
+
+        # Optionally flatten nested dictionaries if present
+        if isinstance(bound_args.get('kwargs'), dict):
+            bound_args.update(bound_args.pop('kwargs'))
+        if isinstance(bound_args.get('args'), dict):
+            bound_args.update(bound_args.pop('args'))
+        return bound_args
+
+    @staticmethod
     def validate_int(*param_names):
         """Decorator to validate that a specific parameter is an integer."""
         def decorator(func):
             def wrapper(*args, **kwargs):
                 # Get the function's signature
-                sig = inspect.signature(func)
-                bound_args = sig.bind_partial(*args, **kwargs).arguments    
-
+                bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
                 # Check both positional (args) and keyword (kwargs) arguments
                 for param_name in param_names:
-                    if not isinstance(bound_args[param_name], int):
+                    if isinstance(bound_args[param_name], int) == False:
                         alchemy.error(f"{param_name} must be an integer")
                         return {"message": "Bad Request", "errors": [f"{param_name} must be an integer"]}
                     
@@ -90,12 +104,10 @@ class DTypeValidator:
         def decorator(func):
             def wrapper(*args, **kwargs):
                 # Get the function's signature
-                sig = inspect.signature(func)
-                bound_args = sig.bind_partial(*args, **kwargs).arguments    
-
+                bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
                 # Check if the parameter is present and validate its type
-                for param_name in enumerate(param_names):
-                    if param_name is not isinstance(bound_args[param_name], str):
+                for param_name in param_names:
+                    if isinstance(bound_args[param_name], str) == False:
                         alchemy.error(f"{param_name} must be a string")
                         return {"message": "Bad Request", "errors": [f"{param_name} must be a string"]}
                     
@@ -110,12 +122,12 @@ class DTypeValidator:
         def decorator(func):
             def wrapper(*args, **kwargs):
                 # Get the function's signature
-                sig = inspect.signature(func)
-                bound_args = sig.bind_partial(*args, **kwargs).arguments    
+                bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
 
                 # Check if the parameter is present and validate its type
-                for param_name in enumerate(param_names):
-                    if param_name is not isinstance(bound_args[param_name], float):
+                for param_name in param_names:
+                    if isinstance(bound_args[param_name], float) == False:
+                        alchemy.error(f"{param_name} must be float")
                         return {"message": "Bad Request", "errors": [f"{param_name} must be float"]}
                     
                 # Call the original function if validation passes
@@ -134,23 +146,20 @@ class DTypeValidator:
             @wraps(func)
             def wrapper(*args, **kwargs):
                 # Bind the function arguments to their names
-                sig = inspect.signature(func)
-                bound_args = sig.bind(*args, **kwargs)
-                bound_args.apply_defaults()
-
+                bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
                 for param_name in param_names:
-                    if param_name in bound_args.arguments:
-                        value = bound_args.arguments[param_name]
+                    if param_name in bound_args:
+                        value = bound_args[param_name]
                         # If the value is not already a Decimal, try to convert it.
                         if not isinstance(value, Decimal):
                             try:
-                                bound_args.arguments[param_name] = Decimal(value)
+                                bound_args[param_name] = Decimal(value)
                             except (ValueError, InvalidOperation):
                                 return {
                                     "message": "Bad Request",
                                     "errors": [f"'{param_name}' must be a valid decimal."]
                                 }
                 # Call the original function with updated arguments.
-                return func(*bound_args.args, **bound_args.kwargs)
+                return func(*args, **kwargs)
             return wrapper
         return decorator
