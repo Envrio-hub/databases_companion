@@ -1,7 +1,7 @@
-__version__='1.1.0'
+__version__='1.1.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2025-02-3'
+__last_updated__='2025-02-06'
 
 import traceback, inspect
 from functools import wraps
@@ -81,13 +81,31 @@ class DTypeValidator:
         return bound_args
 
     @staticmethod
+    def validate_list(*param_names):
+        """Decorator to validate that a specific parameter is a list."""
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                # Extract the function's bound arguments
+                bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
+
+                for param_name in param_names:
+                    if isinstance(bound_args[param_name], list) == False:
+                        alchemy.error(f"{param_name} must be a list")
+                        return {"message": "Bad Request", "errors": [f"{param_name} must be a list"]}
+                    
+                # Call the original function if validation passes
+                return func(*args, **kwargs)
+            return wrapper
+        return decorator
+
+    @staticmethod
     def validate_int(*param_names):
         """Decorator to validate that a specific parameter is an integer."""
         def decorator(func):
             def wrapper(*args, **kwargs):
                 # Get the function's signature
                 bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
-                # Check both positional (args) and keyword (kwargs) arguments
+
                 for param_name in param_names:
                     if isinstance(bound_args[param_name], int) == False:
                         alchemy.error(f"{param_name} must be an integer")
@@ -105,7 +123,7 @@ class DTypeValidator:
             def wrapper(*args, **kwargs):
                 # Get the function's signature
                 bound_args = DTypeValidator._extract_bound_args(func, *args, **kwargs)
-                # Check if the parameter is present and validate its type
+
                 for param_name in param_names:
                     if isinstance(bound_args[param_name], str) == False:
                         alchemy.error(f"{param_name} must be a string")
