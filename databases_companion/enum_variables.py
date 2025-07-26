@@ -45,3 +45,11 @@ class AggregationFunction(str, Enum):
     hourly_max = 'hourly_max'
     hourly_min = 'hourly_min'
     hourly_median = 'hourly_median'
+
+class TemporalResolution(str, Enum):
+    annual = '1 Year'
+    monthly = '1 Month'
+    daily = '1 Day'
+    hourly = '1 Hour'
+    half_hour = '30 Minutes'
+    quarter_hour = '15 Minutes'
