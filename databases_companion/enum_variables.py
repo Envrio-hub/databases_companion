@@ -1,7 +1,7 @@
-__version__='1.1.0'
+__version__='1.1.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2025-07-26'
+__last_updated__='2025-07-30'
 
 from enum import Enum
 
@@ -53,3 +53,7 @@ class TemporalResolution(str, Enum):
     hourly = '1 Hour'
     half_hour = '30 Minutes'
     quarter_hour = '15 Minutes'
+
+class ConfirmationStatus(str, Enum):
+    confirmed = 'confirmed'
+    unconfirmed = 'unconfirmed'
