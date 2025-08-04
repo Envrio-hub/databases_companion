@@ -1,7 +1,7 @@
-__version__='1.0.1'
+__version__='1.1.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2024-10-07'
+__last_updated__='2025-07-30'
 
 from enum import Enum
 
@@ -36,3 +36,24 @@ class IconType(str, Enum):
     inland = 'inland'
     soil = 'soil'
 
+class AggregationFunction(str, Enum):
+    daily_mean = 'daily_mean'
+    daily_max = 'daily_max'
+    daily_min = 'daily_min'
+    daily_median = 'daily_median'
+    hourly_mean = 'hourly_mean'
+    hourly_max = 'hourly_max'
+    hourly_min = 'hourly_min'
+    hourly_median = 'hourly_median'
+
+class TemporalResolution(str, Enum):
+    annual = '1 Year'
+    monthly = '1 Month'
+    daily = '1 Day'
+    hourly = '1 Hour'
+    half_hour = '30 Minutes'
+    quarter_hour = '15 Minutes'
+
+class ConfirmationStatus(str, Enum):
+    confirmed = 'confirmed'
+    unconfirmed = 'unconfirmed'
