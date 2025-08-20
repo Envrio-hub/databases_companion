@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='databases_companion',
-    version='0.1.1',
+    version='0.2.0',
     description='Auxiliary modules for database libraries',
     author='Ioannis Tsakmakis, Nikolaos Kokkos',
     author_email='itsakmak@envrio.org, nkokkos@envrio.org',

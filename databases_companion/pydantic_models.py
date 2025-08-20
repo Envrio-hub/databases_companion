@@ -14,4 +14,5 @@ class BeachAmenities(BaseModel):
     food: bool = False
     watersports: bool = False
     lifeguard: bool = False
+    blue_flag: bool = False
     
