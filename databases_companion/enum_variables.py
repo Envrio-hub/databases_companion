@@ -1,7 +1,7 @@
-__version__='1.1.1'
+__version__='1.1.2'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2025-07-30'
+__last_updated__='2025-08-20'
 
 from enum import Enum
 
@@ -57,3 +57,9 @@ class TemporalResolution(str, Enum):
 class ConfirmationStatus(str, Enum):
     confirmed = 'confirmed'
     unconfirmed = 'unconfirmed'
+
+class CretePerfectures(str, Enum):
+    chania = 'Chania'
+    heraklion = 'Heraklion'
+    rethymnon = 'Rethymnon'
+    lasithi = 'Lasithi'
