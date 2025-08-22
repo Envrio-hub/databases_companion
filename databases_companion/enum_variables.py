@@ -58,7 +58,7 @@ class ConfirmationStatus(str, Enum):
     confirmed = 'confirmed'
     unconfirmed = 'unconfirmed'
 
-class CretePerfectures(str, Enum):
+class CretePrefectures(str, Enum):
     chania = 'Chania'
     heraklion = 'Heraklion'
     rethymnon = 'Rethymnon'
