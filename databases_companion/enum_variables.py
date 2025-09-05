@@ -1,7 +1,7 @@
-__version__='1.1.2'
+__version__='1.1.3'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2025-08-20'
+__last_updated__='2025-09-05'
 
 from enum import Enum
 
@@ -58,8 +58,13 @@ class ConfirmationStatus(str, Enum):
     confirmed = 'confirmed'
     unconfirmed = 'unconfirmed'
 
-class CretePerfectures(str, Enum):
+class CretePrefectures(str, Enum):
     chania = 'Chania'
     heraklion = 'Heraklion'
     rethymnon = 'Rethymnon'
     lasithi = 'Lasithi'
+
+class BeachTypes(str, Enum):
+    open = 'open'
+    breakwater = 'breakwater'
+
