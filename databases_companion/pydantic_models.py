@@ -39,8 +39,8 @@ class WaveDataArgs(BaseModel):
         return value 
     
 class CurrentTempChlorophyllDataArgs(BaseModel):
-    longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
-    latitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    ocean_data_longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    ocean_data_latitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
     start_date: datetime
     end_date: datetime
 
