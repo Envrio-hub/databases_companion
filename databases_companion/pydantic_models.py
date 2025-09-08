@@ -1,7 +1,7 @@
-__version__='0.1.2'
+__version__='0.1.3'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2025-08-20'
-__last_updated__='2025-09-06'
+__last_updated__='2025-09-08'
 
 from pydantic import BaseModel, condecimal, validator
 from decimal import Decimal
@@ -39,8 +39,8 @@ class WaveDataArgs(BaseModel):
         return value 
     
 class CurrentTempChlorophyllDataArgs(BaseModel):
-    longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
-    latitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    ocean_data_longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    ocean_data_latitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
     start_date: datetime
     end_date: datetime
 
