@@ -1,7 +1,7 @@
-__version__='0.1.2'
+__version__='0.1.3'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2025-08-20'
-__last_updated__='2025-09-06'
+__last_updated__='2025-09-08'
 
 from pydantic import BaseModel, condecimal, validator
 from decimal import Decimal
