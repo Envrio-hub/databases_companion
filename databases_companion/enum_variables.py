@@ -41,10 +41,12 @@ class AggregationFunction(str, Enum):
     daily_max = 'daily_max'
     daily_min = 'daily_min'
     daily_median = 'daily_median'
+    daily_sum = 'daily_sum'
     hourly_mean = 'hourly_mean'
     hourly_max = 'hourly_max'
     hourly_min = 'hourly_min'
     hourly_median = 'hourly_median'
+    hourly_sum = 'hourly_sum'
 
 class TemporalResolution(str, Enum):
     annual = '1 Year'
