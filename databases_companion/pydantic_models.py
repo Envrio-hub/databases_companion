@@ -5,7 +5,7 @@ __last_updated__='2025-09-09'
 
 from pydantic import BaseModel, condecimal, validator
 from decimal import Decimal
-from typing import Annotated
+from typing import Annotated, List
 from datetime import datetime
 from databases_companion.enum_variables import BeachTypes, DWDIconVars
 
@@ -58,7 +58,7 @@ class DWDIconDataArgs(BaseModel):
     longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
     start_date: datetime
     end_date: datetime
-    variables: DWDIconVars
+    variables: List[DWDIconVars]
     model: str = "icon_seamless"
     timezone: str = "auto"
 
