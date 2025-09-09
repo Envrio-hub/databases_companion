@@ -70,3 +70,21 @@ class DWDIconDataArgs(BaseModel):
             except ValueError:
                 raise ValueError("Dates must be in format YYYY-MM-DD")
         return value
+    
+class DWDIconDataArgs(BaseModel):
+    latitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    start_date: datetime
+    end_date: datetime
+    variables: DWDIconVars
+    model: str = "icon_seamless"
+    timezone: str = "auto"
+
+    @validator("start_date", "end_date", pre=True)
+    def parse_dates(cls, value):
+        if isinstance(value, str):
+            try:
+                return datetime.strptime(value, "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("Dates must be in format YYYY-MM-DD")
+        return value

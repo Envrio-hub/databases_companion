@@ -75,4 +75,8 @@ class DWDIconVars (str, Enum):
     weather_code = "weather_code"
     ws = "wind_speed_10m"
     wd = "wind_direction_10m"
+<<<<<<< HEAD
     wind_gust = "wind_gusts_10m"
+=======
+    wind_gust = "wind_gusts_10m"
+>>>>>>> origin/0.2.1
