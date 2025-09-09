@@ -7,7 +7,7 @@ from pydantic import BaseModel, condecimal, validator
 from decimal import Decimal
 from typing import Annotated
 from datetime import datetime
-from databases_companion.enum_variables import BeachTypes
+from databases_companion.enum_variables import BeachTypes, DWDIconVars
 
 class BeachAmenities(BaseModel):
     sunbeds: bool = False
@@ -51,4 +51,22 @@ class CurrentTempChlorophyllDataArgs(BaseModel):
                 return datetime.strptime(value, "%Y-%m-%d")
             except ValueError:
                 raise ValueError("Dates must be in format YYYY-MM-DD")
-        return value  
+        return value
+    
+class DWDIconDataArgs(BaseModel):
+    latitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    longitude: Annotated[Decimal, condecimal(max_digits=10, decimal_places=6)]
+    start_date: datetime
+    end_date: datetime
+    variables: DWDIconVars
+    model: str = "icon_seamless"
+    timezone: str = "auto"
+
+    @validator("start_date", "end_date", pre=True)
+    def parse_dates(cls, value):
+        if isinstance(value, str):
+            try:
+                return datetime.strptime(value, "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("Dates must be in format YYYY-MM-DD")
+        return value

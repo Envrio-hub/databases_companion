@@ -68,3 +68,11 @@ class BeachTypes(str, Enum):
     open = 'open'
     breakwater = 'breakwater'
 
+class DWDIconVars (str, Enum):
+    air_temp = "temperature_2m"
+    rh = "relative_humidity_2m"
+    precipitation = "precipitation"
+    weather_code = "weather_code"
+    ws = "wind_speed_10m"
+    wd = "wind_direction_10m"
+    wind_gust = "wind_gusts_10m"
