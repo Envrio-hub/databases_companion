@@ -1,7 +1,7 @@
-__version__='1.1.3'
+__version__='1.1.4'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2025-09-05'
+__last_updated__='2025-09-09'
 
 from enum import Enum
 
@@ -68,3 +68,11 @@ class BeachTypes(str, Enum):
     open = 'open'
     breakwater = 'breakwater'
 
+class DWDIconVars (str, Enum):
+    air_temp = "temperature_2m"
+    rh = "relative_humidity_2m"
+    precipitation = "precipitation"
+    weather_code = "weather_code"
+    ws = "wind_speed_10m"
+    wd = "wind_direction_10m"
+    wind_gust = "wind_gusts_10m"
