@@ -80,6 +80,22 @@ class DWDIconVars (str, Enum):
     wind_gust = "wind_gusts_10m"
 
 class MeasurementCategory(str, Enum):
-    sensor='sensor',
-    meter='meter',
+    sensor='sensor'
+    meter='meter'
     calculated='calculated'
+
+class SurfaceType(str, Enum):
+    grass='grass'
+    bare_soil='bare_soil'
+    concrete='concrete'
+    asphalt='asphalt'
+    crop='crop'
+    water='water'
+    other='other'
+
+class StationType(str, Enum):
+    agro_meteorological='agro_meteorological'
+    atmospheric_quality='atmospheric_quality'
+    coastal='coastal'
+    inland_water='inland_water'
+    soil='soil'
