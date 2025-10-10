@@ -9,7 +9,7 @@ setup(
     packages=find_packages(),
     python_requires='>=3.12',
     install_requires=[
-        'envrio_logger @ git+ssh://git@github.com/Envrio-hub/envrio_logger.git@0.1.1'
+        'envrio_logger @ git+ssh://git@github.com/Envrio-hub/envrio_logger.git@0.1.2'
     ],
     classifiers=[  
         'Development Status :: 4 - Beta',
