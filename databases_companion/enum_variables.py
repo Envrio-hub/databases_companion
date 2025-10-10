@@ -78,3 +78,8 @@ class DWDIconVars (str, Enum):
     ws = "wind_speed_10m"
     wd = "wind_direction_10m"
     wind_gust = "wind_gusts_10m"
+
+class MeasurementCategory(str, Enum):
+    sensor='sensor',
+    meter='meter',
+    calculated='calculated'
