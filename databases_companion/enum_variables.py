@@ -1,7 +1,7 @@
-__version__='1.1.4'
+__version__='1.1.5'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2025-09-09'
+__last_updated__='2025-10-27'
 
 from enum import Enum
 
@@ -78,6 +78,7 @@ class DWDIconVars (str, Enum):
     ws = "wind_speed_10m"
     wd = "wind_direction_10m"
     wind_gust = "wind_gusts_10m"
+    uv_index = "uv_index"
 
 class MeasurementCategory(str, Enum):
     sensor='sensor'
