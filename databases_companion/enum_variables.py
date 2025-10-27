@@ -1,7 +1,7 @@
-__version__='1.1.2'
+__version__='1.1.5'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2025-08-20'
+__last_updated__='2025-10-27'
 
 from enum import Enum
 
@@ -41,10 +41,12 @@ class AggregationFunction(str, Enum):
     daily_max = 'daily_max'
     daily_min = 'daily_min'
     daily_median = 'daily_median'
+    daily_sum = 'daily_sum'
     hourly_mean = 'hourly_mean'
     hourly_max = 'hourly_max'
     hourly_min = 'hourly_min'
     hourly_median = 'hourly_median'
+    hourly_sum = 'hourly_sum'
 
 class TemporalResolution(str, Enum):
     annual = '1 Year'
@@ -58,8 +60,43 @@ class ConfirmationStatus(str, Enum):
     confirmed = 'confirmed'
     unconfirmed = 'unconfirmed'
 
-class CretePerfectures(str, Enum):
+class CretePrefectures(str, Enum):
     chania = 'Chania'
     heraklion = 'Heraklion'
     rethymnon = 'Rethymnon'
     lasithi = 'Lasithi'
+
+class BeachTypes(str, Enum):
+    open = 'open'
+    breakwater = 'breakwater'
+
+class DWDIconVars (str, Enum):
+    air_temp = "temperature_2m"
+    rh = "relative_humidity_2m"
+    precipitation = "precipitation"
+    weather_code = "weather_code"
+    ws = "wind_speed_10m"
+    wd = "wind_direction_10m"
+    wind_gust = "wind_gusts_10m"
+    uv_index = "uv_index"
+
+class MeasurementCategory(str, Enum):
+    sensor='sensor'
+    meter='meter'
+    calculated='calculated'
+
+class SurfaceType(str, Enum):
+    grass='grass'
+    bare_soil='bare_soil'
+    concrete='concrete'
+    asphalt='asphalt'
+    crop='crop'
+    water='water'
+    other='other'
+
+class StationType(str, Enum):
+    agro_meteorological='agro_meteorological'
+    atmospheric_quality='atmospheric_quality'
+    coastal='coastal'
+    inland_water='inland_water'
+    soil='soil'
