@@ -1,13 +1,13 @@
-__version__='0.1.3'
+__version__='0.1.4'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2025-08-20'
-__last_updated__='2025-09-09'
+__last_updated__='2025-10-27'
 
 from pydantic import BaseModel, condecimal, validator
 from decimal import Decimal
 from typing import Annotated, List
 from datetime import datetime
-from databases_companion.enum_variables import BeachTypes, DWDIconVars
+from databases_companion.enum_variables import BeachTypes, DWDIconVars, DWDIconModels
 
 class BeachAmenities(BaseModel):
     sunbeds: bool = False
@@ -59,7 +59,7 @@ class DWDIconDataArgs(BaseModel):
     start_date: datetime
     end_date: datetime
     variables: List[DWDIconVars]
-    model: str = "icon_seamless"
+    models: List[DWDIconModels]
     timezone: str = "auto"
 
     @validator("start_date", "end_date", pre=True)

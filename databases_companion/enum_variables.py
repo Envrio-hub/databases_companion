@@ -80,6 +80,10 @@ class DWDIconVars (str, Enum):
     wind_gust = "wind_gusts_10m"
     uv_index = "uv_index"
 
+class DWDIconModels (str, Enum):
+    gfs_global= 'gfs_global'
+    icon_eu ='icon_eu'
+
 class MeasurementCategory(str, Enum):
     sensor='sensor'
     meter='meter'
